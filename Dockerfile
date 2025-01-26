@@ -1,5 +1,5 @@
 # Sử dụng Node.js v23.5.0 làm base image
-FROM node:23.5.0-alpine as frontend
+FROM node:23.5.0-alpine AS frontend
 
 # Cài đặt thư viện và công cụ cần thiết, bao gồm glibc để hỗ trợ SWC
 RUN apk add --no-cache \
