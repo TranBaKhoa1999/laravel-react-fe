@@ -2,15 +2,33 @@
 
 import { useState, ChangeEvent, FormEvent } from "react";
 import Link from "next/link";
+import { useAuth } from '@/hooks/auth'
+import { useRouter } from 'next/navigation'
 
 export default function LoginForm() {
+    const router = useRouter()
+
+    const { login } = useAuth({
+        middleware: 'guest',
+        redirectIfAuthenticated: '/',
+    })
+
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
+    const [shouldRemember, setShouldRemember] = useState(false)
+    const [errors, setErrors] = useState([])
+    const [status, setStatus] = useState(null)
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log("Email:", email);
-        console.log("Password:", password);
+
+        login({
+            email,
+            password,
+            remember: shouldRemember,
+            setErrors,
+            setStatus,
+        })
     };
 
     const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -70,7 +88,7 @@ export default function LoginForm() {
             <p className="text-gray-500 text-sm mt-4 text-center">
                 Don't have an account?{" "}
                 <Link href={'/user/register'} className="text-blue-600 hover:underline">
-                    Sign up
+                    Register
                 </Link>
             </p>
         </form>

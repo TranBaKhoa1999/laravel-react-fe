@@ -70,7 +70,7 @@ export default function RegisterForm() {
             <p className="text-gray-500 text-sm mt-4 text-center">
                 Already have an account?{" "}
                 <Link href={'/user/login'} className="text-blue-600 hover:underline">
-                    Sign in
+                    Log in
                 </Link>
             </p>
         </form>
