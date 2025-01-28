@@ -5,17 +5,17 @@ const axios = Axios.create({
         "Content-Type": "application/json",
     },
     withCredentials: true,
-    withXSRFToken: true
+    withXSRFToken: true,
 })
-axios.interceptors.request.use((config) => {
-    // Lấy cookie bằng cách split để lấy giá trị `XSRF-TOKEN`
-    const token = getCookie('XSRF-TOKEN');
+// axios.interceptors.request.use((config) => {
+//     // Lấy cookie bằng cách split để lấy giá trị `XSRF-TOKEN`
+//     const token = getCookie('XSRF-TOKEN');
 
-    if (token) {
-        config.headers['X-XSRF-TOKEN'] = token;
-    }
-    return config;
-});
+//     if (token) {
+//         config.headers['X-XSRF-TOKEN'] = token;
+//     }
+//     return config;
+// });
 
 // Helper function để lấy cookie theo tên
 function getCookie(name) {

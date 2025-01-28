@@ -1,6 +1,6 @@
 "use client"
 import { useState } from "react";
-import { useAuth } from "@/hooks/auth"; // Import hook useAuth
+import { useAuth } from "@/lib/auth"; // Import hook useAuth
 
 import Link from "next/link";
 
@@ -8,11 +8,6 @@ export default function Header() {
     const [isOpen, setIsOpen] = useState(false);
 
     const { user, logout } = useAuth(); // Lấy trạng thái user và hàm logout từ useAuth
-
-     // Hàm xử lý logout
-     const handleLogout = async () => {
-        await logout();
-    };
 
     return (
         <header className="bg-blue-600 text-white">
@@ -38,13 +33,19 @@ export default function Header() {
                         <li>
                             <Link href={'/contact'}>Contact</Link>
                         </li>
-                         {/* check if user logged in */}
+                        {/* check if user logged in */}
                         {user ? (
-                            <li>
-                                <button onClick={handleLogout} >
-                                    Logout
-                                </button>
-                            </li>
+                            <>
+                                <Link href={"/profile"}>
+                                    {user.name}
+                                </Link>
+                                <li>
+                                    <button onClick={logout} >
+                                        Logout
+                                    </button>
+                                </li>
+                            </>
+
                         ) : (
                             <li>
                                 <Link href="/user/login" >

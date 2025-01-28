@@ -2,13 +2,13 @@
 
 import { useState, ChangeEvent, FormEvent } from "react";
 import Link from "next/link";
-import { useAuth } from '@/hooks/auth'
+import { useAuth } from '@/lib/auth'
 import { useRouter } from 'next/navigation'
 
 export default function LoginForm() {
     const router = useRouter()
 
-    const { login } = useAuth({
+    const {login, isLoading, user}  = useAuth({
         middleware: 'guest',
         redirectIfAuthenticated: '/',
     })
@@ -18,7 +18,6 @@ export default function LoginForm() {
     const [shouldRemember, setShouldRemember] = useState(false);
 
     const [errors, setErrors] = useState([]);
-    const [status, setStatus] = useState(null);
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -28,7 +27,6 @@ export default function LoginForm() {
             password,
             remember: shouldRemember,
             setErrors,
-            setStatus,
             redirectPath: '/',
         })
     };

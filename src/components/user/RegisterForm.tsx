@@ -2,7 +2,7 @@
 
 import { useState, ChangeEvent, FormEvent } from "react";
 import Link from "next/link";
-import { useAuth } from '@/hooks/auth'
+import { useAuth } from '@/lib/auth'
 
 
 export default function RegisterForm() {
@@ -17,7 +17,7 @@ export default function RegisterForm() {
 
     const { register } = useAuth({
         middleware: 'guest',
-        redirectIfAuthenticated: '/login',
+        redirectIfAuthenticated: '/',
     })
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -29,8 +29,7 @@ export default function RegisterForm() {
             password,
             password_confirmation,
             setErrors,
-            setStatus,
-            redirectPath: '/',
+            redirectPath: '/user/login',
         })
     };
 
