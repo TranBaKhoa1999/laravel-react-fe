@@ -10,7 +10,7 @@ const axios = Axios.create({
 axios.interceptors.request.use((config) => {
     // Lấy cookie bằng cách split để lấy giá trị `XSRF-TOKEN`
     const token = getCookie('XSRF-TOKEN');
-    console.log(token);
+
     if (token) {
         config.headers['X-XSRF-TOKEN'] = token;
     }

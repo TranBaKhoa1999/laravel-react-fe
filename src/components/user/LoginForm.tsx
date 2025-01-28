@@ -15,9 +15,10 @@ export default function LoginForm() {
 
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
-    const [shouldRemember, setShouldRemember] = useState(false)
-    const [errors, setErrors] = useState([])
-    const [status, setStatus] = useState(null)
+    const [shouldRemember, setShouldRemember] = useState(false);
+
+    const [errors, setErrors] = useState([]);
+    const [status, setStatus] = useState(null);
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -28,6 +29,7 @@ export default function LoginForm() {
             remember: shouldRemember,
             setErrors,
             setStatus,
+            redirectPath: '/',
         })
     };
 
