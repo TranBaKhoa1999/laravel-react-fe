@@ -3,20 +3,14 @@ import axios from '@/lib/axios'
 import { useEffect, useState } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 
+import {toast } from 'react-toastify';
+
 export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
     const router = useRouter()
     const params = useParams()
 
     const [isLoading, setIsLoading] = useState(true);
     
-    useEffect(() => {
-        if ( user || !!error){
-            setIsLoading(false);
-        }
-        
-        if (middleware == 'guest' && user) router.push('/')
-        if (middleware == 'auth' && !user && error) router.push('/login')
-    })
 
     const fetchUser = () => axios.get('/api/user').then(response => response.data.data);
 
@@ -60,19 +54,19 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
             .then(response => handleResponse({
                 response,
                 onSuccess: data => {
-                    // mutate();
+                    let userData = data.data.user;
+                    toast.success('Hello, ' + userData.name);
+                    mutate();
                     router.push(redirectPath); // Redirect after register
                 },
                 onError: error => {
-                    console.log(error);
+                    toast.error(error.data);
                     setErrors('Register fail!');
                 },
             }))
             .catch(error => {
-                console.log(error);
-                if (error.response.status !== 422) throw error
-
-                setErrors(error.response.data.errors)
+                if (error.status !== 422) throw error
+                setErrors(error.data)
             })
     }
 
@@ -84,18 +78,22 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
             .then(response => handleResponse({
                 response,
                 onSuccess: data => {
+                    let userData = data.data.user;
+                    toast.success('Hello, ' + userData.name);
+
                     mutate();
                     router.push(redirectPath); // Redirect after login
                 },
                 onError: error => {
+                    toast.error(error.data);
                     setErrors('Login fail!');
                 },
             }))
             .catch(error => {
                 console.log(error);
-                if (error.response.status !== 422) throw error
+                if (error.code !== 422) throw error
 
-                setErrors(error.response.data.errors)
+                setErrors(error.data.errors)
             })
     }
 
@@ -173,6 +171,14 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
         }
     };
 
+    useEffect(() => {
+        if ( user || !!error){
+            setIsLoading(false);
+        }
+        
+        if (middleware == 'guest' && user) router.push('/')
+        if (middleware == 'auth' && !user && error) router.push('/login')
+    })
     // useEffect(() => {
     //     if (middleware === 'guest' && redirectIfAuthenticated && user)
     //         router.push(redirectIfAuthenticated)
