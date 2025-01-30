@@ -88,7 +88,7 @@ export function NavBarFlowbite() {
                 <div className="mt-2 list-none border border-gray-100 rounded-lg">
                     <NavItem href="/" pathname={pathname}>Home</NavItem>
                     <NavItem href="/contact" pathname={pathname}>Contact</NavItem>
-                    <NavItem href="/products" pathname={pathname}>Products</NavItem>
+                    <NavItem href="/about" pathname={pathname}>About</NavItem>
                 </div>
             </div>
 
@@ -96,7 +96,7 @@ export function NavBarFlowbite() {
             <Navbar.Collapse className="hidden md:flex">
                 <NavItem href="/" pathname={pathname}>Home</NavItem>
                 <NavItem href="/contact" pathname={pathname}>Contact</NavItem>
-                <NavItem href="/products" pathname={pathname}>Products</NavItem>
+                <NavItem href="/about" pathname={pathname}>About</NavItem>
             </Navbar.Collapse>
         </Navbar>
     );

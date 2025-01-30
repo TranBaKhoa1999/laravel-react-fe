@@ -8,7 +8,6 @@ export default function ProductList() {
     // const [products, setProducts] = useState<Product[]>([]);
 
      const { products, error, isLoading } = useProducts(5, 1);
-     console.log(products);
     if (error) return (
         <div className="flex items-center justify-center min-h-screen">
             <h2 className="text-3xl font-bold text-red-200">Loading.....</h2>
