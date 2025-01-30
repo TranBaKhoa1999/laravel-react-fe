@@ -29,7 +29,7 @@ export default function RegisterForm() {
             password,
             password_confirmation,
             setErrors,
-            redirectPath: '/user/login',
+            redirectPath: '/auth/login',
         })
     };
 
@@ -116,7 +116,7 @@ export default function RegisterForm() {
             </button>
             <p className="text-gray-500 text-sm mt-4 text-center">
                 Already have an account?{" "}
-                <Link href={'/user/login'} className="text-blue-600 hover:underline">
+                <Link href={'/auth/login'} className="text-blue-600 hover:underline">
                     Log in
                 </Link>
             </p>

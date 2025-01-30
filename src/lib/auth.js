@@ -143,7 +143,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
     //         await axios.post('/api/logout').then(() => mutate())
     //     }
 
-    //     window.location.pathname = '/user/login'
+    //     window.location.pathname = '/auth/login'
     // }
 
     // const logout = async () => {
@@ -151,7 +151,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
 
     //     mutate(null);
 
-    //     router.push('/user/login');
+    //     router.push('/auth/login');
     // }
 
     const logout = async () => {
@@ -165,7 +165,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
             await mutate(null); // Đặt lại `user` thành null hoặc undefined
             
             // Chuyển hướng đến trang login
-            window.location.pathname = '/user/login';
+            window.location.pathname = '/auth/login';
         } catch (error) {
             console.error('Logout failed:', error); // Log lỗi nếu xảy ra vấn đề
         }

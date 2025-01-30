@@ -15,9 +15,11 @@ export function NavBarFlowbite() {
 
     return (
         <Navbar fluid className="bg-white border-b border-gray-200 px-4 py-3 shadow-sm">
-            <Navbar.Brand href="/">
-                <h1 className="text-2xl font-bold text-gray-900">My Website</h1>
-            </Navbar.Brand>
+            <Link href="/">
+                <span className="text-2xl font-bold text-gray-900 cursor-pointer">
+                    My Website
+                </span>
+            </Link>
 
             {/* Search Input (Desktop) */}
             <div className="hidden md:flex items-center w-64">
@@ -49,16 +51,18 @@ export function NavBarFlowbite() {
                             <span className="block text-sm font-semibold">{user.name}</span>
                             <span className="block truncate text-sm text-gray-500">{user.email}</span>
                         </Dropdown.Header>
-                        <Dropdown.Item>Dashboard</Dropdown.Item>
-                        <Dropdown.Item>Settings</Dropdown.Item>
-                        <Dropdown.Item>Earnings</Dropdown.Item>
+                        <Dropdown.Item>
+                            <Link href={"/user/profile"}>
+                                Profile
+                            </Link>
+                        </Dropdown.Item>
                         <Dropdown.Divider />
                         <Dropdown.Item as="button" onClick={logout} className="text-red-500 hover:bg-red-100">
                             Sign out
                         </Dropdown.Item>
                     </Dropdown>
                 ) : (
-                    <Link href="/user/login">
+                    <Link href="/auth/login">
                         <Button color="blue" size="sm" className="rounded-lg">
                             Login
                         </Button>
@@ -106,8 +110,8 @@ function NavItem({ href, pathname, children }: { href: string; pathname: string;
             <Navbar.Link
                 active={isActive}
                 className={`md:text-xl block py-2 px-4 rounded-sm mb-2 md:mb-0 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:p-0 text-gray-900 ${isActive
-                        ? "bg-blue-700 text-white rounded-sm hover:text-gray-900"
-                        : " md:bg-transparent"
+                    ? "bg-blue-700 text-white rounded-sm hover:text-gray-900"
+                    : " md:bg-transparent"
                     }`}
             >
                 {children}

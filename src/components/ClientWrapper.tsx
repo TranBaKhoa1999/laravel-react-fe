@@ -8,7 +8,7 @@ export default function ClientWrapper({ children }: { children: React.ReactNode 
     const pathname = usePathname();
 
     // Kiểm tra nếu route bắt đầu với "/user"
-    const isUserAuth = pathname?.match("/user/login") || pathname?.match("/user/register");
+    const isUserAuth = pathname?.match("/auth/login") || pathname?.match("/auth/register");
 
     return (
         <>
