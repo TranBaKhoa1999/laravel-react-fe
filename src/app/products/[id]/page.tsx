@@ -2,7 +2,6 @@
 
 import ImageWithFallback from "@/components/ImageWithFallBack";
 import { useProductById } from "@/services/ProductService";
-import { Product } from "@/types/Product";
 import { useParams } from "next/navigation";
 
 export default function ProductDetail() {
@@ -27,7 +26,7 @@ export default function ProductDetail() {
     return (
         <div className="min-h-content">
             <h1 className="text-2xl font-bold">{product?.name}</h1>
-            <ImageWithFallback src={product?.image} alt={product?.name} className="" width={500} height={500} />
+            <ImageWithFallback src={product?.image} alt={product?.name} className="" width={390} height={380} priority={true} />
             <p>{product?.description}</p>
             <p className="text-xl font-semibold">{product?.price} VND</p>
         </div>
