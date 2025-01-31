@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 
 import "@/styles/globals.css";
-import ClientWrapper from "@/components/ClientWrapper";
+import AppFooter from "@/components/AppFooter";
+import AppHeader from "@/components/AppHeader";
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -31,10 +32,12 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-            <ToastContainer />
-            <ClientWrapper>
-                {children}
-            </ClientWrapper>
+                <ToastContainer />
+                <AppHeader />
+                <main>
+                    {children}
+                </main>
+                <AppFooter />
             </body>
         </html>
     );

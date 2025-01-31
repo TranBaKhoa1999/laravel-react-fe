@@ -1,7 +1,7 @@
 import axios from '@/lib/axios'
 import { ApiResponse } from '@/types/ApiResponse';
 import { Product } from '@/types/Product';
-import useSWR from 'swr';
+import useSWR , {Fetcher} from 'swr';
 
 export const useProducts = (limit = 5, page = 1) => {
     const linkApi = process.env.NEXT_PUBLIC_BACKEND_API_PREFIX + "/products" + `?limit=${limit}&page=${page}`;

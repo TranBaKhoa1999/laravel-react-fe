@@ -13,19 +13,19 @@ export default function ProductDetail() {
     const { product, error, isLoading } = useProductById(id);
 
     if (error) return (
-        <div className="flex items-center justify-center min-h-screen">
+        <div className="flex items-center justify-center min-h-content">
             <h2 className="text-3xl font-bold text-red-200">Loading.....</h2>
         </div>
     );
 
     if (isLoading) return (
-        <div className="flex items-center justify-center min-h-screen">
+        <div className="flex items-center justify-center min-h-content">
             <h2 className="text-3xl font-bold text-red-200">Loading.....</h2>
         </div>
     );
 
     return (
-        <div className="min-h-screen">
+        <div className="min-h-content">
             <h1 className="text-2xl font-bold">{product?.name}</h1>
             <ImageWithFallback src={product?.image} alt={product?.name} className="" width={500} height={500} />
             <p>{product?.description}</p>

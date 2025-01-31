@@ -2,8 +2,6 @@ import useSWR from 'swr'
 import axios from '@/lib/axios'
 import { useEffect, useState } from 'react'
 import { useParams, useRouter } from 'next/navigation'
-import { ApiResponse } from '@/types/ApiResponse'
-import { User } from '@/types/User'
 
 import {toast } from 'react-toastify';
 
