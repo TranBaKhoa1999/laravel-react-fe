@@ -5,8 +5,8 @@ import useSWR from 'swr';
 
 export const useProducts = (limit = 5, page = 1) => {
     const linkApi = process.env.NEXT_PUBLIC_BACKEND_API_PREFIX + "/products" + `?limit=${limit}&page=${page}`;
-    const fetchProducts = () => axios.get<ApiResponse>(linkApi).then((response) => response.data.data.data);
-    const { data: products, error, isLoading } = useSWR<Product>(linkApi, fetchProducts, {
+    const fetchProducts = () => axios.get<ApiResponse>(linkApi).then((response) => response.data.data);
+    const { data, error, isLoading } = useSWR<ApiResponse>(linkApi, fetchProducts, {
         // Refetch when the data is stale (outdated)
         revalidateIfStale: true, // Refetch data when it's stale
         // Refetch when the page is focused again
@@ -24,7 +24,8 @@ export const useProducts = (limit = 5, page = 1) => {
         errorRetryInterval: 3000, // Retry every 3 seconds
     });
     return {
-        products,
+        products: data?.data ?? [],
+        meta: data?.meta ?? null, // pagination
         error,
         isLoading
     }
