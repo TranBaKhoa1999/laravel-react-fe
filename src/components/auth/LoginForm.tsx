@@ -8,10 +8,7 @@ import { useRouter } from 'next/navigation'
 export default function LoginForm() {
     const router = useRouter()
 
-    const {login, isLoading, user}  = useAuth({
-        middleware: 'guest',
-        redirectIfAuthenticated: '/',
-    })
+    const {login, isLoading, user}  = useAuth()
 
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");

@@ -15,10 +15,7 @@ export default function RegisterForm() {
     const [errors, setErrors] = useState([])
     const [status, setStatus] = useState(null)
 
-    const { register } = useAuth({
-        middleware: 'guest',
-        redirectIfAuthenticated: '/',
-    })
+    const { register } = useAuth()
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();

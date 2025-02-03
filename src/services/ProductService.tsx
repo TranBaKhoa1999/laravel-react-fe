@@ -41,7 +41,7 @@ export const useProductById = (id: number, initialData?: Product) => {
         // Refetch when the page is focused again
         revalidateOnFocus: false, // Refetch when the user comes back to the page
         // Refetch when the network connection is restored
-        revalidateOnReconnect: false, // Refetch when the user reconnects to the internet
+        revalidateOnReconnect: true, // Refetch when the user reconnects to the internet
     });
     return {
         product,

@@ -51,6 +51,13 @@ export function NavBarFlowbite() {
                             <span className="block text-sm font-semibold">{user.name}</span>
                             <span className="block truncate text-sm text-gray-500">{user.email}</span>
                         </Dropdown.Header>
+                        {user.is_admin && (
+                            <Dropdown.Item>
+                                <Link href={"/admin"}>
+                                    Admin Dashboard
+                                </Link>
+                            </Dropdown.Item>
+                        )}
                         <Dropdown.Item>
                             <Link href={"/user/profile"}>
                                 Profile

@@ -1,18 +1,54 @@
 import useSWR from 'swr'
 import axios from '@/lib/axios'
 import { useEffect, useState } from 'react'
-import { useParams, useRouter } from 'next/navigation'
+import { useParams, useRouter, usePathname } from 'next/navigation'
 
 import {toast } from 'react-toastify';
 
 export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
     const router = useRouter()
     const params = useParams()
+    const pathname = usePathname();
 
+
+    // middleware == auth: require login
+    // middleware == guest: require not login
+
+    if(!middleware) {
+        middleware = 'guest';
+    }
+    
     const [isLoading, setIsLoading] = useState(true);
     
 
     const fetchUser = () => axios.get('/api/user').then(response => response.data.data);
+    // const fetchUser = async () => {
+    //     try {
+    //         const response = await axios.get('/api/user');
+            
+    //         // Sử dụng handleResponse để kiểm tra và xử lý phản hồi từ API
+    //         handleResponse({
+    //             response,
+    //             onSuccess: (data) => {
+    //                 // Nếu phản hồi thành công, trả về dữ liệu người dùng
+    //                 return data.data;
+    //             },
+    //             onError: (errorData) => {
+    //                 // Nếu có lỗi (như lỗi 401), trả về null hoặc xử lý khác
+    //                 if (response.status === 401) {
+    //                     console.log('Unauthorized access');
+    //                     return null;  // Trả về null nếu không được ủy quyền
+    //                 }
+    //                 console.log('API error:', errorData);
+    //                 return null;
+    //             }
+    //         });
+    //     } catch (error) {
+    //         // Xử lý lỗi mạng hoặc lỗi hệ thống khác
+    //         console.log('Error fetching user:', error);
+    //         return null;
+    //     }
+    // };
 
     const {data: user, error, mutate} = useSWR('/api/user', fetchUser, {
         revalidateIfStale: true,
@@ -165,20 +201,50 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
             await mutate(null); // Đặt lại `user` thành null hoặc undefined
             
             // Chuyển hướng đến trang login
-            window.location.pathname = '/auth/login';
+            router.push('/auth/login');
         } catch (error) {
             console.error('Logout failed:', error); // Log lỗi nếu xảy ra vấn đề
         }
     };
 
     useEffect(() => {
-        if ( user || !!error){
+        if (user !== undefined || !!error){ // if user data is loaded from api/user ( if not login, user is null - not undefined)
             setIsLoading(false);
         }
-        
-        if (middleware == 'guest' && user) router.push('/')
-        if (middleware == 'auth' && !user && error) router.push('/login')
-    })
+
+        if(isLoading) return; // if is loading data, then do nothing
+
+        const loginPage = pathname.startsWith('/auth/login');
+        const registerPage = pathname.startsWith('/auth/register');
+        const adminPage = pathname.startsWith('/admin');
+        const userPage = pathname.startsWith('/user');
+
+        if(userPage || adminPage) {
+           middleware = 'auth';
+        }
+        if (user && (loginPage || registerPage)) { // redirect to homepage if user try to access login or register page after logged in
+            router.push('/');
+        }
+
+        if (middleware == 'auth') {
+            if(!user) {
+                return router.push('/auth/login');
+            } 
+
+            if(adminPage && !user.is_admin) {
+                router.push('/');
+            }
+        }
+
+    }, [user, error, pathname, isLoading, router]);
+
+    // useEffect(() => {
+    //     if (!isLoading && (!user || !user?.isAdmin)) {
+    //         router.push('/'); // Quay về trang chủ nếu không phải admin
+    //     }
+    // }, [isLoading, user, router]);
+
+
     // useEffect(() => {
     //     if (middleware === 'guest' && redirectIfAuthenticated && user)
     //         router.push(redirectIfAuthenticated)
@@ -204,6 +270,6 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
         // resendEmailVerification,
         logout,
         error,
-        isLoading
+        isLoading,
     }
 }
