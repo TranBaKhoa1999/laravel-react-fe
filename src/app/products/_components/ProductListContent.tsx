@@ -5,10 +5,10 @@ import { Product } from "@/types/Product";
 import ProductCard from "./ProductCard";
 import { useEffect } from "react";
 
-export default function ProductListContent({ limit, currentPage, onTotalPagesChange }: { limit: number, currentPage: number, onTotalPagesChange: (total: number) => void }) {
+export default function ProductListContent({ category_slug ,limit, currentPage, onTotalPagesChange }: { category_slug:string, limit: number, currentPage: number, onTotalPagesChange: (total: number) => void }) {
     // const [products, setProducts] = useState<Product[]>([]);
 
-    const { products, meta, error, isLoading } = useProducts(limit, currentPage);
+    const { products, meta, error, isLoading } = useProducts(category_slug, limit, currentPage);
 
     // Cập nhật số totalPages khi có dữ liệu mới từ API
     useEffect(() => {

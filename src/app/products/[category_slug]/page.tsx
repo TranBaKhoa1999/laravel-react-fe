@@ -2,10 +2,13 @@
 
 import { Pagination } from "flowbite-react";
 import { useEffect, useState } from "react";
-import ProductListContent from "./_components/ProductListContent";
+import ProductListContent from "../_components/ProductListContent";
+import { useParams } from "next/navigation";
 
 export default function ProductList() {
     // const [products, setProducts] = useState<Product[]>([]);
+    const params = useParams();
+    const category_slug = String(params.category_slug);
 
     const paginationLimits = [5, 10];
     const [limit, setLimit] = useState(paginationLimits[0]);
@@ -44,7 +47,7 @@ export default function ProductList() {
                     </select>
                 </div>
 
-                <ProductListContent category_slug={''} currentPage={currentPage} limit={limit} onTotalPagesChange={setTotalPages} />
+                <ProductListContent category_slug={category_slug} currentPage={currentPage} limit={limit} onTotalPagesChange={setTotalPages} />
             </div>
 
 

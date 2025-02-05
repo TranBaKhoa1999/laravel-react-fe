@@ -3,8 +3,13 @@ import { ApiResponse } from '@/types/ApiResponse';
 import { Product } from '@/types/Product';
 import useSWR from 'swr';
 
-export const useProducts = (limit = 5, page = 1) => {
-    const linkApi = process.env.NEXT_PUBLIC_BACKEND_API_PREFIX + "/products" + `?limit=${limit}&page=${page}`;
+export const useProducts = (category_slug: any, limit = 5, page = 1) => {
+    var linkApi = '';
+    if(category_slug){
+        linkApi = process.env.NEXT_PUBLIC_BACKEND_API_PREFIX + `/products/${category_slug}` + `?limit=${limit}&page=${page}`;
+    }else {
+        linkApi = process.env.NEXT_PUBLIC_BACKEND_API_PREFIX + "/products" + `?limit=${limit}&page=${page}`;
+    }
     const fetchProducts = () => axios.get<ApiResponse>(linkApi).then((response) => response.data.data);
     const { data, error, isLoading } = useSWR<ApiResponse>(linkApi, fetchProducts, {
         // Refetch when the data is stale (outdated)
@@ -31,8 +36,27 @@ export const useProducts = (limit = 5, page = 1) => {
     }
 };
 
-export const useProductById = (id: number, initialData?: Product) => {
-    const linkApi = process.env.NEXT_PUBLIC_BACKEND_API_PREFIX + "/products/" + id;
+// export const useProductById = (id: number, initialData?: Product) => {
+//     const linkApi = process.env.NEXT_PUBLIC_BACKEND_API_PREFIX + "/products/" + id;
+//     const fetchProducts = () => axios.get<ApiResponse>(linkApi).then((response) => response.data.data);
+//     const { data: product, error, isLoading } = useSWR<Product>(linkApi, fetchProducts, {
+//         fallbackData: initialData,
+//         // Refetch when the data is stale (outdated)
+//         revalidateIfStale: false, // Refetch data when it's stale
+//         // Refetch when the page is focused again
+//         revalidateOnFocus: false, // Refetch when the user comes back to the page
+//         // Refetch when the network connection is restored
+//         revalidateOnReconnect: true, // Refetch when the user reconnects to the internet
+//     });
+//     return {
+//         product,
+//         error,
+//         isLoading
+//     }
+// };
+
+export const useProductBySlug = (category_slug: String, product_slug: String, initialData?: Product) => {
+    const linkApi = process.env.NEXT_PUBLIC_BACKEND_API_PREFIX + `/products/${category_slug}/${product_slug}`;
     const fetchProducts = () => axios.get<ApiResponse>(linkApi).then((response) => response.data.data);
     const { data: product, error, isLoading } = useSWR<Product>(linkApi, fetchProducts, {
         fallbackData: initialData,
