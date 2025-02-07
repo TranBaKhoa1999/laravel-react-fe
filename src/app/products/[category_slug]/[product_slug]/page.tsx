@@ -28,7 +28,7 @@ export default function ProductDetail() {
     return (
         <div className="min-h-content">
             <h1 className="text-2xl font-bold">{product?.name}</h1>
-            <ImageWithFallback src={product?.image} alt={product?.name} className="" width={390} height={380} priority={true} />
+            <ImageWithFallback src={product?.image_url} alt={product?.name} className="" width={390} height={380} priority={true} />
             <p>{product?.description}</p>
             <p className="text-xl font-semibold">{product?.price} VND</p>
         </div>

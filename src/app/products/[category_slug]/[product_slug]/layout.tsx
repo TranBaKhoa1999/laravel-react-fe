@@ -51,8 +51,7 @@ export async function generateMetadata({
     };
 }
 
-export default function RootLayout({ children, }: Readonly<{ children: React.ReactNode; }>) {
-
+export default function ProductDetailLayout({ children }: { children: React.ReactNode }) {
     return (
         <>
             {children}

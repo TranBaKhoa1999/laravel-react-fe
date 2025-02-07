@@ -32,7 +32,7 @@ export default function ProductList() {
     };
     
     return (
-        <div className="flex flex-col min-h-content">
+        <div className="flex-grow flex flex-col min-h-content">
             <div className="flex-grow">
                 {/* Control limit */}
                 <div className="flex justify-end p-4">

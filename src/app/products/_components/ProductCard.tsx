@@ -10,7 +10,7 @@ export default function ProductCard({ product }: { product: Product }) {
     const [showModal, setShowModal] = useState(false);
     return (
         <div className="border p-4 rounded-lg shadow-md">
-            <ImageWithFallback src={product.image} alt={product.name} className="w-full h-40 object-cover" width={500} height={500} />
+            <ImageWithFallback src={product.image_url} alt={product.name} className="w-full h-40 object-cover" width={500} height={500} />
             <h2 className="text-xl font-semibold">
                 <Link href={`/products/${product.category.slug}/${product.slug}`} className="">
                     {product.name}

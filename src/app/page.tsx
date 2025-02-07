@@ -3,6 +3,7 @@
 import { Pagination } from "flowbite-react";
 import { useEffect, useState } from "react";
 import ProductListContent from "./products/_components/ProductListContent";
+import CategorySidebar from "@/components/CategorySideBar";
 
 export default function ProductList() {
     // const [products, setProducts] = useState<Product[]>([]);
@@ -27,36 +28,40 @@ export default function ProductList() {
         localStorage.setItem('productsLimit', String(newLimit)) // store limit in localStorage
         setCurrentPage(1); // Reset to first page
     };
-    
+
     return (
-        <div className="flex flex-col min-h-content">
-            <div className="flex-grow">
-                {/* Control limit */}
-                <div className="flex justify-end p-4">
-                    <select
-                        value={limit}
-                        onChange={(e) => handleLimitChange(Number(e.target.value))}
-                        className="border p-2"
-                    >
-                        {paginationLimits.map((limitValue) => (
-                            <option key={limitValue} value={limitValue}>{limitValue} items</option>
-                        ))}
-                    </select>
+        <div className="flex">
+            <CategorySidebar />
+            <div className="flex-grow flex flex-col min-h-content">
+                <div className="flex-grow">
+                    {/* Control limit */}
+                    <div className="flex justify-end p-4">
+                        <select
+                            value={limit}
+                            onChange={(e) => handleLimitChange(Number(e.target.value))}
+                            className="border p-2"
+                        >
+                            {paginationLimits.map((limitValue) => (
+                                <option key={limitValue} value={limitValue}>{limitValue} items</option>
+                            ))}
+                        </select>
+                    </div>
+
+                    <ProductListContent category_slug={''} currentPage={currentPage} limit={limit} onTotalPagesChange={setTotalPages} />
                 </div>
 
-                <ProductListContent currentPage={currentPage} limit={limit} onTotalPagesChange={setTotalPages} />
-            </div>
 
-
-            {/* Pagination */}
-            <div className="flex justify-center p-4 ">
-                <Pagination
-                    currentPage={currentPage}
-                    totalPages={totalPages} // Luôn cập nhật từ API
-                    onPageChange={setCurrentPage}
-                    showIcons
-                />
+                {/* Pagination */}
+                <div className="flex justify-center p-4 ">
+                    <Pagination
+                        currentPage={currentPage}
+                        totalPages={totalPages} // Luôn cập nhật từ API
+                        onPageChange={setCurrentPage}
+                        showIcons
+                    />
+                </div>
             </div>
         </div>
+
     );
 }
