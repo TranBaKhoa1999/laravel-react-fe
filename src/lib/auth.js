@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { useParams, useRouter, usePathname } from 'next/navigation'
 
 import {toast } from 'react-toastify';
+import { useAuthStore } from '@/app/storage/AuthStorage';
 
 export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
     const router = useRouter()
@@ -49,7 +50,6 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
     //         return null;
     //     }
     // };
-
     const {data: user, error, mutate} = useSWR('/api/user', fetchUser, {
         revalidateIfStale: true,
         revalidateOnFocus: true,
@@ -115,6 +115,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
                 response,
                 onSuccess: data => {
                     let userData = data.data.user;
+                    useAuthStore.getState().setUser(userData);
                     toast.success('Hello, ' + userData.name);
 
                     mutate();
@@ -197,6 +198,8 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
             // Gửi request logout
             await axios.post('/api/logout');
             
+            useAuthStore.getState().logout();
+
             // Reset user state bằng mutate
             await mutate(null); // Đặt lại `user` thành null hoặc undefined
             

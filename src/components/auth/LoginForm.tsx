@@ -4,11 +4,12 @@ import { useState, ChangeEvent, FormEvent } from "react";
 import Link from "next/link";
 import { useAuth } from '@/lib/auth'
 import { useRouter } from 'next/navigation'
+import { useAuthContext } from "@/app/context/AuthProvider";
 
 export default function LoginForm() {
     const router = useRouter()
 
-    const {login, isLoading, user}  = useAuth()
+    const {login, isLoading, user}  = useAuthContext()
 
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");

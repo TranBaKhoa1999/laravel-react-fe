@@ -3,13 +3,17 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Avatar, Dropdown, Navbar, Button, TextInput } from "flowbite-react";
-import { useAuth } from "@/lib/auth";
 import { useState } from "react";
 import { HiSearch } from "react-icons/hi";
+import { useAuthContext } from "@/app/context/AuthProvider";
+import { useAuthStore } from "@/app/storage/AuthStorage";
+import { useAuth } from "@/lib/auth";
 
 export function NavBarFlowbite() {
     const pathname = usePathname();
-    const { user, logout } = useAuth();
+    const { user, logout } = useAuthContext();
+    // const { logout } = useAuth();
+    // const { user } = useAuthStore();
     const [search, setSearch] = useState("");
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
