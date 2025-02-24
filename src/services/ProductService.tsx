@@ -4,7 +4,7 @@ import { Product } from '@/types/Product';
 import useSWR from 'swr';
 
 export const useProducts = (category_slug: any, limit = 5, page = 1) => {
-    var linkApi = '';
+    let linkApi = '';
     if(category_slug){
         linkApi = process.env.NEXT_PUBLIC_BACKEND_API_PREFIX + `/products/${category_slug}` + `?limit=${limit}&page=${page}`;
     }else {

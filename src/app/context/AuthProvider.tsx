@@ -20,10 +20,26 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const { user, csrf, register, login, logout, error, isLoading } = useAuth();
 
     const [authState, setAuthState] = useState<User | null>(user);
+    // const [loading, setLoading] = useState(true); // Đợi lấy dữ liệu từ localStorage
+
+    // Khôi phục user từ localStorage khi tải trang
+    // useEffect(() => {
+    //     const storedUser = localStorage.getItem("auth-user");
+    //     if (storedUser) {
+    //         setAuthState(JSON.parse(storedUser));
+    //     }
+    //     setLoading(false); // Đánh dấu đã lấy xong dữ liệu
+    // }, []);
 
     useEffect(() => {
         if (!isLoading) {
             setAuthState(user);
+            if (user) {
+                // console.log('alo');
+                // localStorage.setItem("auth-user", JSON.stringify(user));
+            } else {
+                localStorage.removeItem("auth-user");
+            }
         }
     }, [user, error, isLoading]);
 

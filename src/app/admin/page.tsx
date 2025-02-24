@@ -9,7 +9,6 @@ export default function dashboard() {
     // const { user, error, isLoading } = useAuth();
     // const { user, error, isLoading } = useAuthContext();
     const { user, isLoading } = useAuthStore();
-    console.log(user);
     
     // if (error) return <div>failed to load</div>
 

@@ -8,12 +8,22 @@ import { HiSearch } from "react-icons/hi";
 import { useAuthContext } from "@/app/context/AuthProvider";
 import { useAuthStore } from "@/app/storage/AuthStorage";
 import { useAuth } from "@/lib/auth";
+import { json } from "stream/consumers";
 
 export function NavBarFlowbite() {
     const pathname = usePathname();
-    const { user, logout } = useAuthContext();
+    var { user: userData, logout } = useAuthContext();
+    // var { user: userData, logout } = useAuthStore();
+
+    const localStorageUserData = localStorage.getItem("auth-user");
+    var user = null;
+    if (localStorageUserData) {
+        const parsedData = JSON.parse(localStorageUserData);
+        user = parsedData.state?.user;
+    } else {
+        user = userData;
+    }
     // const { logout } = useAuth();
-    // const { user } = useAuthStore();
     const [search, setSearch] = useState("");
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 

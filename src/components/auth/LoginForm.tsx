@@ -9,7 +9,7 @@ import { useAuthContext } from "@/app/context/AuthProvider";
 export default function LoginForm() {
     const router = useRouter()
 
-    const {login, isLoading, user}  = useAuthContext()
+    const {login, isLoading, user}  = useAuthContext();
 
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
